@@ -29,10 +29,15 @@
         });
 
       socket.on("message", function(msg) {
-        $("messages").append("<li>" + msg + "</li>");
+        $("#messages").append("<li>" + msg + "</li>");
         });
 
-      });
+       //sending a message and clearing the input box once the message has been sent
+       $("#SendButton").on("click", function() {
+          socket.send($("#MyMessage").val());
+          $("#MyMessage").val("");
+       });
+     });
 
 
 

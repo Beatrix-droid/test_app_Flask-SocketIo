@@ -20,5 +20,5 @@ def hello_world():
 
 if __name__ == "__main_":
 	# instead of app.run()
-	# socket io takes the typical flask app and wraps it around the socketio functionilty
+	# socket io takes the typicdcal flask app and wraps it around the socketio functionilty
 	socketio.run(app)
