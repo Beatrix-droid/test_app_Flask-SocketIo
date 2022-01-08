@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <h1>Hello, world! This is a test messaging app :)</h1>
+
+
+    <!-- importing jquery to handle the "on click event for the send button " and socketio scripts to implement client side of the messaging app -->
+     <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+      <!-- script where the code handling the messages will be stored -->
+    <script type="text/javascript">
+      // instantiate a socket object and connect it to the server (in this case the local host)
+      $(document).ready(function() {
+        var socket = io.connect("http://127.0.0.1:5000");
+
+        //making sure that when the user has connected we get notified. socket.on means the socket is
+        //listening for a particular event (the event is the first parameter passed in socket.on)
+        // once the socket knows a user has connected, it triggers a callback function that sends a message that the user has connected (socket.send)
+
+      socket.on("connect", function(){
+        socket.send("User has connected");
+        });
+
+      socket.on("message", function(msg) {
+        $("messages").append("<li>" + msg + "</li>");
+        });
+
+      });
+
+
+
+    </script>
+
+    <!-- Unordered list that will display messages from clients -->
+  <ul id="messages"></ul>
+  <input type="text" id="MyMessage">
+  <button id="SendButton">Send Message!</button>
+  </body>
+</html>
