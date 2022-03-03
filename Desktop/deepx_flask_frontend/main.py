@@ -1,10 +1,9 @@
 
-from flask import Flask, render_template
+from flask import Flask, render_template, flash, request
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileRequired
+from flask_wtf.file import FileField, FileRequired, FileAllowed
 from werkzeug.utils import secure_filename
 
-import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'supersecretkey'
@@ -13,18 +12,19 @@ app.config['UPLOAD_FOLDER'] = 'uploads'
 
 
 class UploadImage(FlaskForm):
-    file = FileField()
+    file = FileField(validators=[FileRequired(), FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!')])
 
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
     """uploads an image"""
     form = UploadImage()
-
     if form.validate_on_submit():
         filename = secure_filename(form.file.data.filename)
         form.file.data.save('uploads/' + filename)
         return "<h1> Insert Neural Network Magic....  <h1>"
+
+
 
     return render_template("index.html",form=form)
 
